@@ -111,14 +111,14 @@ and p.id not in (
 	where bt."name" in ('Беседка'));
 
 -- except вариант
-select p.* from plot p
+select distinct p.* from plot p
 join building b 
 on b.plot_id = p.id 
 join building_type bt 
 on bt.id = b.type_id 
 where bt."name" in ('Туалет', 'Баня')
 except  
-	select p.* from plot p
+	select distinct  p.* from plot p
 	join building b 
 	on b.plot_id = p.id 
 	join building_type bt 
