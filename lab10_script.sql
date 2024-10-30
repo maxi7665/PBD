@@ -15,7 +15,7 @@ create OPERATOR ~ (
 select 'клен канадский'::species ~ 'клен обыкновенный'::species as is_similar;
 select 'береза'::species ~ 'клен обыкновенный'::species as is_similar;
 
--- агрегатная функция - подсчет кол-ва разных похожих пород в выборке 
+-- финальная функция - подсчет кол-ва разных похожих пород в выборке 
 select count_unique_similar(array[
 	'клен канадский'::species, 
 	'клен обыкновенный'::species, 
@@ -24,18 +24,32 @@ select count_unique_similar(array[
 	'гималайская береза'::species,
 	'сосна'::species]);
 
-select count_similar(tree.species) from tree;
+-- аккумулирующая функция 
+select unnest(species_acc(array['сосна'::species], 'гималайская береза'));
+
+-- создание агрегатной функции
+CREATE AGGREGATE unique_by_similar(species) (
+    SFUNC = species_acc, -- функция, собирающая массив
+    STYPE = species[], -- тип данных состояния
+    FINALFUNC = count_unique_similar, -- финализируюшая функция
+   	INITCOND = "{}"); -- начальный пустой массив
+
+select unique_by_similar(tree.species) from tree;
 
 --а.	аллеи, на которых встречаются разные виды кленов (клен в названии)
--- к наследнику и главной таблице
-select a.*, 
+-- к наследнику
+select a.*,
 count(t.id) as tree_count, -- кол-во деревьев
-count_similar(t."species") as species_count -- кол-во пород
-from alley a join tree t on t.alley_id = a.id  
-where t."name" like "%клен" -- в имени содержится клен
-and exists (select * from tree t2 where t2.alley_id = a.id and t2."species" ~ t."species" and t2.id != t.id) -- на аллее есть другие клены 
+unique_by_similar(t."species") as species_count -- кол-во пород
+from alley a join tree t on t.alley_id = a.id 
+where lower(t."name") like '%клен%' -- в имени содержится клен
+and exists(
+	select t2.id from tree t2 
+	where t2.alley_id = a.id 
+	and t2."species" ~ t."species" 
+	and t2.id != t.id) -- на аллее есть другие клены (подобные деревья)
 group by a.id
-having species_count > 1; -- пород больше одной
+having unique_by_similar(t."species") = 1; -- в выборку одной группы попали строго подобные породы
 
 
 
