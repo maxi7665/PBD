@@ -54,14 +54,38 @@ having unique_by_similar(t."species") = 1; -- в выборку одной гр�
 
 
 --б.	аллеи, на которых есть и статуи и фонтаны
--- к главной таблице
+-- к главной таблице и наследнику
+SELECT a.* FROM alley a
+where (
+-- счет уникальных номеров таблиц для элементов на аллее
+	SELECT count(distinct i.tableoid) FROM park_item i 
+	left JOIN fountain f ON f.id = i.id -- фонтаны
+	left join statue s on s.id = i.id -- статуи
+	where i.alley_id = a.id -- на аллее
+	and (f.id is not null or s.id is not null) -- нашлась либо статуя либо фонтан
+) >= 2; -- как минимум два типа - нашлось и то и другое
 
 --в.	дерево, которое было посажено позже всех
 -- к наследнику
+select t.* from tree t
+where t.plant_date = 
+	(select max(t2.plant_date) from tree t2);
 
 --г.	порода, деревьев которой больше всего
 -- к наследнику
+select t."species", count(t.id) as cnt from tree t
+group by t."species"
+order by cnt desc limit 1;
+
 
 --д.	аллея, на которой нет фонтанов
 -- к главной таблице
+	select a.* from alley a -- все аллеи
+except
+	--исключая аллеи на которых есть фонтаны
+	select distinct a2.* from alley a2 
+	join park_item pi2 
+	on pi2.alley_id = a2.id 
+	and pi2.tableoid = 'fountain'::regclass::oid
+order by id;
 
