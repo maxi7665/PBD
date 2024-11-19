@@ -1,0 +1,142 @@
+{
+    "alleys": [
+        {
+            "id": 1,
+            "items": [
+                {
+                    "alley_id": 1,
+                    "id": 1,
+                    "is_swimming_allowed": "false",
+                    "name": "Фонтан 1",
+                    "type": "fountain"
+                }
+            ],
+            "num": 1
+        },
+        {
+            "id": 2,
+            "items": [
+                {
+                    "alley_id": 2,
+                    "id": 2,
+                    "is_swimming_allowed": "true",
+                    "name": "Фонтан 2",
+                    "type": "fountain"
+                }
+            ],
+            "num": 2
+        },
+        {
+            "id": 3,
+            "items": [
+                {
+                    "alley_id": 3,
+                    "cut_date": "2024-10-28T00:00:00",
+                    "id": 6,
+                    "name": "Клен",
+                    "plant_date": "2024-09-28T00:00:00",
+                    "species": "клен канадский",
+                    "type": "tree"
+                }
+            ],
+            "num": 3
+        },
+        {
+            "id": 4,
+            "items": [
+                {
+                    "alley_id": 4,
+                    "cut_date": "2024-10-27T00:00:00",
+                    "id": 7,
+                    "name": "Клен",
+                    "plant_date": "2024-09-27T00:00:00",
+                    "species": "клен обыкновенный",
+                    "type": "tree"
+                },
+                {
+                    "alley_id": 4,
+                    "cut_date": "2024-10-26T00:00:00",
+                    "id": 12,
+                    "name": "Клен",
+                    "plant_date": "2024-09-26T00:00:00",
+                    "species": "красный клен",
+                    "type": "tree"
+                }
+            ],
+            "num": 4
+        },
+        {
+            "id": 5,
+            "items": [
+                {
+                    "alley_id": 5,
+                    "cut_date": "2024-10-26T00:00:00",
+                    "id": 8,
+                    "name": "Клен",
+                    "plant_date": "2024-09-26T00:00:00",
+                    "species": "красный клен",
+                    "type": "tree"
+                }
+            ],
+            "num": 5
+        },
+        {
+            "id": 6,
+            "items": [
+                {
+                    "alley_id": 6,
+                    "cut_date": "2024-10-25T00:00:00",
+                    "id": 9,
+                    "name": "Береза",
+                    "plant_date": "2024-09-25T00:00:00",
+                    "species": "береза",
+                    "type": "tree"
+                },
+                {
+                    "alley_id": 6,
+                    "id": 5,
+                    "material": "bronze",
+                    "name": "Радищев",
+                    "type": "statue"
+                },
+                {
+                    "alley_id": 6,
+                    "id": 4,
+                    "material": "bronze",
+                    "name": "Иосиф Сталин (отец народов)",
+                    "type": "statue"
+                },
+                {
+                    "alley_id": 6,
+                    "id": 10,
+                    "is_swimming_allowed": "false",
+                    "name": "Фонтан 3",
+                    "type": "fountain"
+                }
+            ],
+            "num": 6
+        },
+        {
+            "id": 7,
+            "items": [
+                {
+                    "alley_id": 7,
+                    "cut_date": "2024-10-24T00:00:00",
+                    "id": 11,
+                    "name": "Сосна",
+                    "plant_date": "2024-08-25T00:00:00",
+                    "species": "сосна",
+                    "type": "tree"
+                },
+                {
+                    "alley_id": 7,
+                    "id": 3,
+                    "material": "gypsum",
+                    "name": "Венера Милосская",
+                    "type": "statue"
+                }
+            ],
+            "num": 7
+        }
+    ]
+}

@@ -89,3 +89,20 @@ except
 	and pi2.tableoid = 'fountain'::regclass::oid
 order by id;
 
+SELECT
+     json_agg(a)       
+FROM alley a
+
+SELECT
+     json_agg(i), (select relname from pg_class where oid = i.tableoid) as name
+FROM park_item i
+group by i.id
+--join park_item it on it.alley_id = a.id
+
+SELECT
+     json_agg(t)       
+FROM tree t
+group by alley_id 
+order by alley_id
+
+
