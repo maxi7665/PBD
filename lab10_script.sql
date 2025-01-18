@@ -27,12 +27,15 @@ select count_unique_similar(array[
 -- аккумулирующая функция 
 select unnest(species_acc(array['сосна'::species], 'гималайская береза'));
 
+select unnest(species_acc(array['сосна'::species], NULL));
+
 -- создание агрегатной функции
 CREATE AGGREGATE unique_by_similar(species) (
     SFUNC = species_acc, -- функция, собирающая массив
     STYPE = species[], -- тип данных состояния
     FINALFUNC = count_unique_similar, -- финализируюшая функция
    	INITCOND = "{}"); -- начальный пустой массив
+   	
 
 select unique_by_similar(tree.species) from tree;
 
@@ -71,11 +74,21 @@ select t.* from tree t
 where t.plant_date = 
 	(select max(t2.plant_date) from tree t2);
 
+--select count(t.id) as cnt from tree t
+--group by t."species" limit 1;
+
 --г.	порода, деревьев которой больше всего
 -- к наследнику
+--select t."species", count(t.id) as cnt from tree t
+--group by t."species"
+--order by cnt desc limit 1;
+
 select t."species", count(t.id) as cnt from tree t
 group by t."species"
-order by cnt desc limit 1;
+having count(t.id) = (select count(t.id) as cnt from tree t
+	group by t."species"
+	order by cnt desc limit 1)
+order by cnt desc;
 
 
 --д.	аллея, на которой нет фонтанов
@@ -104,5 +117,23 @@ SELECT
 FROM tree t
 group by alley_id 
 order by alley_id
+
+select a.*,i.*,i.tableoid from alley a 
+join park_item i on i.alley_id = a.id;
+
+-- запрос к наследнику
+select * from tree;
+
+-- запрос к родителю
+select * from only park_item;
+
+-- запрос к наследнику и родителю
+select pi.*, t.* from park_item pi
+join tree t on pi.id = t.id;
+
+-- запрос к родителю, но данные всех наследников
+select * from park_item;
+
+
 
 
