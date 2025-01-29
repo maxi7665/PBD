@@ -44,7 +44,7 @@ select *  from building_count;
     
    
 -- ТРИГГЕРЫ 1,2
-insert into payment(sum, date_time, type_id, owner_id) values (50000, '2023-05-17 13:00:00.000', 2, 6);
+insert into payment(sum, date_time, type_id, owner_id) values (50000, '2023-05-18 13:00:00.000', 2, 6);
 
 
 
@@ -63,7 +63,9 @@ delete from building where id = 28;
 
 
 -- триггер 7
-update owner set "first_name"='Настя' where id=3;
+update owner set "first_name"='Анастасия' where id=3;
+
+
 
 
 
